@@ -1,0 +1,45 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "numcodecs-lon-gradient"
+version = "0.1.0"
+description = "Meta codec bounding the absolute error of the finite-difference derivative along a periodic axis for the `numcodecs` buffer compression API"
+readme = "README.md"
+license = "MPL-2.0"
+requires-python = ">=3.10"
+dependencies = [
+    "leb128~=1.0.8",
+    "numcodecs>=0.13.0,<0.17",
+    "numba>=0.60",
+    "numcodecs-combinators~=0.2.13",
+    "numpy~=2.0",
+    "typing-extensions~=4.6",
+]
+
+[dependency-groups]
+dev = ["mypy~=1.14", "pytest~=8.3", "numcodecs-eb-quantize~=0.1.0"]
+
+[project.entry-points."numcodecs.codecs"]
+"lon_gradient" = "numcodecs_lon_gradient:LongitudeGradientCodec"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+"numcodecs_lon_gradient" = ["py.typed"]
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]
+
+[tool.pytest.ini_options]
+addopts = ["--import-mode=importlib"]
+xfail_strict = true
+
+[[tool.mypy.overrides]]
+module = ["leb128.*", "numcodecs.*", "numcodecs_combinators.*", "numba.*", "numcodecs_context_mixing.*"]
+follow_untyped_imports = true
+
+[tool.uv.sources]
+numcodecs-eb-quantize = { git = "https://github.com/SF-N/numcodecs-eb-quantize" }

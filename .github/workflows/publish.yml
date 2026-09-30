@@ -1,0 +1,27 @@
+name: Publish
+
+on:
+  release:
+    branch: main
+    types: [released]
+
+jobs:
+  publish:
+    name: Publish to PyPi
+    runs-on: ubuntu-latest
+    environment: publish
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Checkout the Repository
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Build the package
+        run: uv build
+
+      - name: Publish the package to PyPi
+        run: uv publish

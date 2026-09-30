@@ -1,0 +1,61 @@
+site_name: numcodecs-lon-gradient
+
+strict: true
+
+markdown_extensions:
+  - footnotes
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      use_pygments: true
+      noclasses: true
+
+theme:
+  name: readthedocs
+  highlightjs: false
+
+nav:
+  - Home: index.md
+  - Links:
+      - GitHub: https://github.com/SF-N/numcodecs-lon-gradient
+      - PyPI: https://pypi.org/project/numcodecs-lon-gradient/
+
+plugins:
+  - mkdocstrings-python-generator:
+      source_dirs:
+        - nav_heading: [Documentation]
+          base: src
+  - exclude:
+      glob:
+        - requirements.txt
+  - search
+  - mkdocstrings:
+      enable_inventory: true
+      handlers:
+        python:
+          options:
+              docstring_section_style: list
+              docstring_style: numpy
+              show_if_no_docstring: true
+              filters: [
+                "!^_$", "!^_[^_]", "!^__", "__init__"
+              ]
+              members_order: source
+              group_by_category: false
+              show_source: false
+              separate_signature: true
+              show_signature_annotations: true
+              signature_crossrefs: true
+              show_root_toc_entry: false
+              merge_init_into_class: true
+              summary:
+                  attributes: false
+                  classes: true
+                  functions: true
+                  modules: true
+          inventories:
+            - https://docs.python.org/3.12/objects.inv
+            - https://numpy.org/doc/2.2/objects.inv
+            - https://numcodecs.readthedocs.io/en/v0.16.0/objects.inv
+
+watch:
+  - src
